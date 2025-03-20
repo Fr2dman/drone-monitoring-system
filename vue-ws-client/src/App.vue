@@ -22,7 +22,7 @@ import { RouterLink, RouterView } from "vue-router";
     <!-- 사이드바 -->
     <side-bar>
       <ul>
-        <li><RouterLink to="/">DashBoard</RouterLink></li>
+        <li><RouterLink to="/dashboard">DashBoard</RouterLink></li>
         <li><RouterLink to="/drone-status">Drone Status</RouterLink></li>
         <li><RouterLink to="/mission-status">Mission Status</RouterLink></li>
         <li><RouterLink to="/all-stop">All Stop</RouterLink></li>
@@ -35,8 +35,7 @@ import { RouterLink, RouterView } from "vue-router";
     </main>
   </div>
 
-  <footer>
-  </footer>
+  <footer></footer>
 </template>
 
 <style scoped>
@@ -47,9 +46,7 @@ header {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
-
 }
-
 
 .logo {
   border-radius: 20px;
@@ -63,7 +60,7 @@ header .logo-identity {
   align-items: center;
   justify-content: space-around;
   font-size: 20px;
-  color: white;
+  /* color: rgb(31, 31, 31); */
 }
 
 nav {
@@ -99,7 +96,7 @@ nav a:first-of-type {
 /* 사이드바 스타일 */
 side-bar {
   width: 220px;
-  background-color: #1C293C;
+  background-color: #1c293c;
   border-radius: 20px;
   color: white;
   margin-right: 10px;
@@ -152,9 +149,9 @@ side-bar ul li a:hover {
   }
 
   header .logo-identity {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
   }
 
   header .wrapper {
