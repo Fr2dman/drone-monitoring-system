@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+// import DroneStatus from '../components/DroneStatus.vue'; // DroneStatus 컴포넌트
+// import MissionStatus from '../components/MissionStatus.vue'; // MissionStatus 컴포넌트
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,6 +20,19 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
+    // { path: '/drone-status',
+    //   name: 'drones',
+    //   component: DroneStatus,
+    // },
+    // { path: '/mission-status',
+    //   name: 'mission',
+    //   component: MissionStatus,
+
+    // },
+    // { path: '/all-stop',
+    //   name: 'drone-status',
+    //   component: MissionStatus,
+    // }, // 예시로 MissionStatus 페이지
   ],
 })
 
