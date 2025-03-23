@@ -10,13 +10,27 @@ const map = ref(null);
 const droneMarkers = ref({}); // 드론별 마커 저장
 
 // WebSocket 설정
-const ws = ref(null);
+const ws = new WebSocket("ws://localhost:8000");
 
 // 드론 초기 좌표
 const dronePosition = ref({
   lat: 37.5665, // 서울 예제
   lng: 126.978,
 });
+
+ws.onmessage = (event) => {
+  const { data } = JSON.parse(event.data);
+  if (!data.location) return;
+
+  if (!droneMarkers.value[data.droneId]) {
+    const marker = new mapboxgl.Marker()
+      .setLngLat([data.location.lng, data.location.lat])
+      .addTo(map.value);
+    droneMarkers.value[data.droneId] = marker;
+  } else {
+    droneMarkers.value[data.droneId].setLngLat([data.location.lng, data.location.lat]);
+  }
+};
 
 // 창 크기 변경 시 맵 리사이징
 const handleResize = () => {
@@ -32,8 +46,8 @@ const handleResize = () => {
 // 드론 위치 가져오는 API 호출 함수
 const fetchDroneData = async () => {
   try {
-    console.log(markers);
-    const response = await fetch("http://localhost:3000/api/drone/location");
+    //console.log(markers);
+    const response = await fetch("http://localhost:8000/api/drone/location");
     const data = await response.json();
     dronePosition.value = { lat: data.lat, lng: data.lng };
 

@@ -19,7 +19,7 @@ import { RouterLink, RouterView } from "vue-router";
 
   <div class="root">
     <!-- 사이드바 -->
-    <side-bar>
+    <nav-bar>
       <ul>
         <li>
           <RouterLink to="/dashboard">
@@ -46,7 +46,7 @@ import { RouterLink, RouterView } from "vue-router";
           </RouterLink>
         </li>
       </ul>
-    </side-bar>
+    </nav-bar>
 
     <!-- 사이드바 오른쪽에 페이지 내용 -->
     <main class="content">
@@ -116,47 +116,49 @@ nav a:first-of-type {
 
 .root {
   display: flex;
+  flex-direction: column;
   min-height: 100%;
 }
 /* 사이드바 스타일 */
-side-bar {
-  width: 220px;
-  min-width: 220px;
+nav-bar {
+  width: 100%;
+  height: auto;
   background-color: #1c293c;
   border-radius: 20px;
   color: white;
-  margin-right: 10px;
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 20px;
 }
 
-side-bar ul {
+nav-bar ul {
   list-style: none;
-  padding: 10px 0px 10px 10px;
-  margin: 20px 0px 0px;
+  margin: 0px;
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+nav-bar ul li {
+  width: 220px;
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
-side-bar ul li {
-  width: 200px;
-  margin: 15px 0;
-  display: flex;
-}
-
-side-bar ul li a {
+nav-bar ul li a {
   display: flex;
   align-items: center; /* 아이콘과 텍스트 정렬 */
-  padding: 10px;
+  justify-content: center;
+  padding: 8px;
   border-radius: 10px;
   transition: background 0.3s;
   text-decoration: none;
   color: white;
   width: 100%; /* 전체 너비 사용 */
+  font-size: 20px;
 }
 
-side-bar ul li a:hover {
+nav-bar ul li a:hover {
   text-decoration: underline;
   border-radius: 10px;
 }

@@ -36,42 +36,59 @@ import DroneStatusInfo from "@/components/DroneStatus/DroneStatusInfo.vue";
 .dashboard-container {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* 섹션 간격 */
-  /* padding: 20px; */
+  gap: 20px;
 }
 
 /* 맵이 상단 전체를 차지하도록 설정 */
 .dashboard-map {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* span과 맵 사이 간격 */
+  gap: 10px;
   width: 100%;
 }
 
 /* 하단 컨테이너 (Drone List + Status) */
 .dashboard-bottom {
   display: flex;
-  gap: 20px; /* 두 개의 요소 간격 */
+  gap: 20px;
+  justify-content: space-between;
 }
 
 /* Drone List 스타일 */
 .dashboard-dronelist {
-  flex: 1; /* 남은 공간을 균등하게 차지 */
+  flex: 1; /* 기본적으로 같은 비율 */
+  min-width: 300px; /* 최소 너비 설정 */
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
 .dashboard-dronelist .drone-list-contents {
-  padding: 0px;
   display: flex;
+  gap: 10px;
 }
-/* Status Panel 스타일 */
+
+/* Drone Status Panel 스타일 */
 .dashboard-status {
-  flex: 1; /* Drone List와 동일한 크기 */
+  flex: 2; /* 차트 포함, 더 넓게 설정 */
+  min-width: 400px; /* 최소 너비 설정 */
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+/* 작은 화면에서도 같은 줄에 유지 */
+@media (max-width: 1600px) {
+  .dashboard-bottom {
+    flex-wrap: wrap;
+  }
+  .dashboard-dronelist {
+    flex: 1 1 100%; /* 화면이 좁아지면 한 줄 차지 */
+  }
+
+  .dashboard-status {
+    flex: 1 1 100%; /* 화면이 좁아지면 아래로 */
+  }
 }
 
 /* 제목 스타일 */
