@@ -1,25 +1,10 @@
 <script setup>
-import DashboardDroneMap from "@/pages/Dashboard/DashboardDroneMap.vue";
-import DroneList from "@/pages/Dashboard/DroneList.vue";
-
-// export default {
-//   components: {
-//     DashboardDroneMap,
-//   },
-//   data() {
-//     return {
-//       drones: [],
-//       status: [],
-//       missions: [],
-//     };
-//   },
-//   method : {
-
-//   },
-// };
-
-const message = "This is DashBoard";
+import DashboardDroneMap from "@/components/Dashboard/DashboardDroneMap.vue";
+import DroneList from "@/components/DroneList.vue";
+import DroneRegister from "@/components/DroneRegister.vue";
+import DroneStatusInfo from "@/components/DroneStatus/DroneStatusInfo.vue";
 </script>
+
 <template>
   <main class="dashboard-container">
     <!-- 맵을 상단 전체 너비로 배치 -->
@@ -32,12 +17,15 @@ const message = "This is DashBoard";
     <div class="dashboard-bottom">
       <div class="dashboard-dronelist">
         <span>Drone List</span>
-        <DroneList />
+        <div class="drone-list-contents">
+          <DroneRegister />
+          <DroneList />
+        </div>
       </div>
 
       <div class="dashboard-status">
         <span>Status</span>
-        <StatusPanel />
+        <DroneStatusInfo />
       </div>
     </div>
   </main>
@@ -74,6 +62,10 @@ const message = "This is DashBoard";
   gap: 10px;
 }
 
+.dashboard-dronelist .drone-list-contents {
+  padding: 0px;
+  display: flex;
+}
 /* Status Panel 스타일 */
 .dashboard-status {
   flex: 1; /* Drone List와 동일한 크기 */

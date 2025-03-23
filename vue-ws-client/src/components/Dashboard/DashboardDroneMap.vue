@@ -7,13 +7,15 @@ mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const mapContainer = ref(null); // 맵 컨테이너 참조
 const map = ref(null);
-const droneMarker = ref(null);
-const markers = ref([]); // 사용자가 추가한 마커들
+const droneMarkers = ref({}); // 드론별 마커 저장
+
+// WebSocket 설정
+const ws = ref(null);
 
 // 드론 초기 좌표
 const dronePosition = ref({
   lat: 37.5665, // 서울 예제
-  lng: 126.9780,
+  lng: 126.978,
 });
 
 // 창 크기 변경 시 맵 리사이징
@@ -21,8 +23,8 @@ const handleResize = () => {
   if (map.value) {
     setTimeout(() => {
       nextTick(() => {
-      map.value.resize();
-    });
+        map.value.resize();
+      });
     }, 300); // 딜레이를 줘서 브라우저 크기 변경 후 리사이징 적용
   }
 };
@@ -46,43 +48,25 @@ const fetchDroneData = async () => {
 
 // 맵 초기화
 onMounted(() => {
-  map.value = new mapboxgl.Map({
-    container: mapContainer.value,
-    style: "mapbox://styles/dragonbong/cm8ifixrp017v01ssdiaz1k10",
-    center: [dronePosition.value.lng, dronePosition.value.lat],
-    zoom: 13,
+  nextTick(() => {
+    map.value = new mapboxgl.Map({
+      container: mapContainer.value,
+      style: "mapbox://styles/dragonbong/cm8ifixrp017v01ssdiaz1k10",
+      center: [dronePosition.value.lng, dronePosition.value.lat],
+      zoom: 13,
+    });
+
+    map.value.on("load", () => {
+      window.dispatchEvent(new Event("resize")); // 올바른 resize 이벤트 트리거
+    });
+
+    // 주기적으로 드론 위치 업데이트
+    setInterval(fetchDroneData, 1000);
   });
 
-  // 드론 마커 추가
-  droneMarker.value = new mapboxgl.Marker({ color: "red" })
-    .setLngLat([dronePosition.value.lng, dronePosition.value.lat])
-    .addTo(map.value)
-    .setPopup(new mapboxgl.Popup().setText("Drone Location"));
-
-  // 주기적으로 드론 위치 업데이트
-  setInterval(fetchDroneData, 5000);
-
-  // 맵 클릭 시 마커 추가 기능
-  map.value.on("dbclick", (e) => {
-    const { lng, lat } = e.lngLat;
-
-    // 새 마커 생성
-    const newMarker = new mapboxgl.Marker({ color: "blue" })
-      .setLngLat([lng, lat])
-      .addTo(map.value)
-      .setPopup(new mapboxgl.Popup().setText(`위치: ${lat.toFixed(5)}, ${lng.toFixed(5)}`));
-
-    markers.value.push(newMarker); // 마커 배열에 추가
-  });
   // 창 크기 변경 이벤트 추가
   window.addEventListener("resize", handleResize);
 });
-
-// 컴포넌트 해제 시 이벤트 제거
-onUnmounted(() => {
-  window.removeEventListener("resize", handleResize);
-});
-
 </script>
 
 <template>

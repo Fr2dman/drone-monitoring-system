@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import DashBoard from "@/components/DashBoard.vue";
-import DroneStatus from '../components/DroneStatus.vue'; // DroneStatus 컴포넌트
-import MissionStatus from '../components/MissionStatus.vue'; // MissionStatus 컴포넌트
+import DashBoard from "@/pages/DashBoard.vue";
+import DroneStatus from "@/pages/DroneStatus.vue"; // DroneStatus 컴포넌트
+import MissionStatus from "@/pages/MissionStatus.vue"; // MissionStatus 컴포넌트
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,23 +22,23 @@ const router = createRouter({
     },
     {
       path: "/dashboard",
-      name: "dashboard", 
-      component: DashBoard 
+      name: "dashboard",
+      component: DashBoard,
     },
     {
-      path: "/drone-status", 
-      name: "drones", 
-      component: DroneStatus 
+      path: "/drone-status",
+      name: "drones",
+      component: DroneStatus,
     },
     {
       path: "/mission-status",
       name: "mission",
-      component: MissionStatus 
+      component: MissionStatus,
     },
-    { 
-      path: "/all-stop", 
-      name: "drone-status", 
-      component: MissionStatus 
+    {
+      path: "/all-stop",
+      name: "drone-status",
+      component: MissionStatus,
     }, // 예시로 MissionStatus 페이지
   ],
 });

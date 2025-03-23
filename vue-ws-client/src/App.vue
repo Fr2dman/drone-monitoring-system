@@ -5,7 +5,7 @@ import { RouterLink, RouterView } from "vue-router";
 <template>
   <header>
     <div class="logo-identity">
-      <img src="C:\Users\SSAFY\Desktop\codes\drone-monitoring-system\vue-ws-client\src\assets\logo.svg" alt="logo" class="logo">
+      <img src=".\assets\logo.svg" alt="logo" class="logo" />
       <span>MEW - Monitoring & Execution System for Wings</span>
     </div>
 
@@ -52,13 +52,15 @@ import { RouterLink, RouterView } from "vue-router";
     <main class="content">
       <RouterView />
     </main>
-
   </div>
 
   <footer></footer>
 </template>
 
 <style scoped>
+body {
+  margin: 0px;
+}
 header {
   line-height: 1.5;
   max-height: 100vh;
@@ -112,6 +114,10 @@ nav a:first-of-type {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
+.root {
+  display: flex;
+  min-height: 100%;
+}
 /* 사이드바 스타일 */
 side-bar {
   width: 220px;
@@ -197,5 +203,4 @@ li span {
     padding: 1rem 0;
   }
 }
-
 </style>
