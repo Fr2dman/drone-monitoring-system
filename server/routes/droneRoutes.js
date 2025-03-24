@@ -1,22 +1,31 @@
-import express from 'express';
+import express from "express";
+import Drone from "../models/Drone.js";
+import MissionRecord from "../models/MissionRecord.js";
+
 const router = express.Router();
 
-// 예제 드론 위치 데이터
-let droneData = {
-  lat: 37.5665,
-  lng: 126.9780
-};
-
-// 드론 위치 반환 API
-router.get("/location", (req, res) => {
-  res.json(droneData);
+// 드론 목록 가져오기
+router.get("/drones", async (req, res) => {
+  const drones = await Drone.findAll();
+  res.json(drones);
 });
 
-// 드론 위치 변경 API (시뮬레이션용)
-router.post("/update-location", (req, res) => {
-  const { lat, lng } = req.body;
-  droneData = { lat, lng };
-  res.json({ message: "Drone location updated", droneData });
+// 특정 드론 정보 가져오기
+router.get("/drones/:id", async (req, res) => {
+  const drone = await Drone.findByPk(req.params.id);
+  res.json(drone);
 });
 
-export default { router };
+// 드론 미션 설정
+router.post("/drones/:id/mission", async (req, res) => {
+  const { targetLat, targetLng, missionType } = req.body;
+  await MissionRecord.create({
+    droneId: req.params.id,
+    missionType,
+    targetLat,
+    targetLng,
+  });
+  res.json({ message: "Mission assigned!" });
+});
+
+export default router;
