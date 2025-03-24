@@ -2,6 +2,7 @@ import WebSocket from "ws";
 import net from "net";
 
 const DRONE_ID = `drone-${Math.floor(Math.random() * 1000)}`;
+const DRONE_MODEL = "99AirJY730"
 const SERVER_URL = "ws://localhost:8000"; // WebSocket 서버 주소
 const TCP_SERVER_PORT = 9000; // TCP 서버 포트
 
@@ -19,6 +20,7 @@ ws.on("open", () => {
   setInterval(() => {
     const status = {
       droneId: DRONE_ID,
+      droneModel: DRONE_MODEL,
       battery: Math.floor(Math.random() * 100), // 랜덤 배터리 상태
       speed: Math.random() * 10, // 랜덤 속도
       location: { lat: 37.5665, lng: 126.978 }, // 서울 좌표 예제
@@ -55,6 +57,7 @@ tcpClient.connect(TCP_SERVER_PORT, "localhost", () => {
 
     const droneStatus = {
       droneId: DRONE_ID,
+      droneModel: DRONE_MODEL,
       battery: Math.max(0, 100 - Math.random() * 10),
       speed: Math.random() * 10,
       location,

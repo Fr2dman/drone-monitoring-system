@@ -50,7 +50,7 @@ const registerDrone = async () => {
 </script>
 <template>
   <div class="drone-register">
-    <h3>드론 등록</h3>
+    <h3>임무 배정</h3>
     <form @submit.prevent="registerDrone" class="form-grid">
       <div class="form-group">
         <label for="droneId">드론 모델:</label>
@@ -63,14 +63,14 @@ const registerDrone = async () => {
           <input
             v-model="targetLat"
             type="number"
-            step="0.00000000000001"
+            step="0.000000000000001"
             required
             placeholder="위도 (Lat)"
           />
           <input
             v-model="targetLng"
             type="number"
-            step="0.00000000000001"
+            step="0.000000000000001"
             required
             placeholder="경도 (Lng)"
           />

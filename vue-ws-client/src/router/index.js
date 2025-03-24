@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import DashBoard from "@/pages/DashBoard.vue";
 import DroneStatus from "@/pages/DroneStatus.vue"; // DroneStatus 컴포넌트
-import MissionStatus from "@/pages/MissionStatus.vue"; // MissionStatus 컴포넌트
+import MissionRecords from "@/pages/MissionRecords.vue"; // MissionStatus 컴포넌트
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,14 +31,14 @@ const router = createRouter({
       component: DroneStatus,
     },
     {
-      path: "/mission-status",
+      path: "/mission-records",
       name: "mission",
-      component: MissionStatus,
+      component: MissionRecords,
     },
     {
       path: "/all-stop",
-      name: "drone-status",
-      component: MissionStatus,
+      name: "all-stop",
+      component: MissionRecords,
     }, // 예시로 MissionStatus 페이지
   ],
 });

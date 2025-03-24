@@ -1,8 +1,18 @@
 <script setup>
+import { ref } from "vue";
 import DashboardDroneMap from "@/components/Dashboard/DashboardDroneMap.vue";
 import DroneList from "@/components/DroneList.vue";
-import DroneRegister from "@/components/DroneRegister.vue";
+import MissionRegister from "@/components/MissionRegister.vue";
 import DroneStatusInfo from "@/components/DroneStatus/DroneStatusInfo.vue";
+
+const selectedCoordinates = ref({ lat: "", lng: "" });
+
+// `DashBoardDroneMap.vue`에서 좌표를 받는 함수
+const handleCoordinatesUpdate = (coords) => {
+  selectedCoordinates.value = coords;
+  console.log(selectedCoordinates.value);
+};
+
 </script>
 
 <template>
@@ -10,7 +20,7 @@ import DroneStatusInfo from "@/components/DroneStatus/DroneStatusInfo.vue";
     <!-- 맵을 상단 전체 너비로 배치 -->
     <div class="dashboard-map">
       <span>Drone Map</span>
-      <DashboardDroneMap />
+      <DashboardDroneMap @update-target-coordinates="handleCoordinatesUpdate"/>
     </div>
 
     <!-- 하단 컨테이너: DroneList + Status 창 배치 -->
@@ -18,7 +28,7 @@ import DroneStatusInfo from "@/components/DroneStatus/DroneStatusInfo.vue";
       <div class="dashboard-dronelist">
         <span>Drone List</span>
         <div class="drone-list-contents">
-          <DroneRegister />
+          <MissionRegister :initial-coordinates="selectedCoordinates" />
           <DroneList />
         </div>
       </div>

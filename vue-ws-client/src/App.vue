@@ -34,9 +34,9 @@ import { RouterLink, RouterView } from "vue-router";
           </RouterLink>
         </li>
         <li>
-          <RouterLink to="/mission-status">
+          <RouterLink to="/mission-records">
             <span class="material-symbols-outlined"> flag </span>
-            <p>Mission Situation</p>
+            <p>Mission Records</p>
           </RouterLink>
         </li>
         <li>
@@ -72,16 +72,16 @@ header {
 
 .logo {
   border-radius: 20px;
-  margin: 0 1rem 0 0;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
 }
 
 header .logo-identity {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  font-size: 20px;
+  font-size: 1rem;
+  gap: 1rem;
   /* color: rgb(31, 31, 31); */
 }
 
@@ -117,9 +117,10 @@ nav a:first-of-type {
 .root {
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  min-height: 100vh;
 }
-/* 사이드바 스타일 */
+
+/* 네비게이션바 스타일 */
 nav-bar {
   width: 100%;
   height: auto;
@@ -127,19 +128,24 @@ nav-bar {
   border-radius: 20px;
   color: white;
   margin-bottom: 20px;
+  position: relative;
+
 }
 
 nav-bar ul {
   list-style: none;
-  margin: 0px;
+  margin: 0;
+  padding: 0;
   display: flex;
-  justify-content: space-around;
   align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap; /* 화면이 작아지면 자동으로 줄 바꿈 */
+  justify-content: space-evenly; /* 요소를 균등 배치 */
+  gap: 10px; /* 항목 간격 조정 */
 }
 
 nav-bar ul li {
   width: 220px;
-  margin: 15px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -149,13 +155,14 @@ nav-bar ul li a {
   display: flex;
   align-items: center; /* 아이콘과 텍스트 정렬 */
   justify-content: center;
-  padding: 8px;
+  /* padding: 5px; */
   border-radius: 10px;
   transition: background 0.3s;
   text-decoration: none;
   color: white;
   width: 100%; /* 전체 너비 사용 */
-  font-size: 20px;
+  font-size: 1rem;
+  /* gap: 5px; */
 }
 
 nav-bar ul li a:hover {
@@ -171,8 +178,10 @@ li span {
 .content {
   flex-grow: 1;
   background-color: #a3a3a3;
-  padding: 10px 20px 10px 20px;
+  padding: 10px 20px;
   border-radius: 10px;
+  position: relative; /* 맵이 포함된 영역을 명확히 정의 */
+  overflow: visible;  /* 맵 내부 요소(마커 등)가 잘리지 않도록 설정 */
 }
 
 @media (min-width: 1024px) {
@@ -205,4 +214,20 @@ li span {
     padding: 1rem 0;
   }
 }
+/*
+/* 반응형 스타일
+@media (max-width: 768px) {
+  nav-bar ul {
+    /* 모바일에서는 세로 배치
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  nav-bar ul li {
+    width: 100%;
+     /* 모바일에서는 최대 너비 지정
+    max-width: 250px;
+  }
+}
+*/
 </style>
