@@ -6,13 +6,19 @@ import MissionRegister from "@/components/MissionRegister.vue";
 import DroneStatusInfo from "@/components/DroneStatus/DroneStatusInfo.vue";
 
 const selectedCoordinates = ref({ lat: "", lng: "" });
+const selectedDroneId = ref(null); // 📌 선택된 드론 ID를 저장
 
 // `DashBoardDroneMap.vue`에서 좌표를 받는 함수
 const handleCoordinatesUpdate = (coords) => {
   selectedCoordinates.value = coords;
-  console.log(selectedCoordinates.value);
+  console.log("[📌 선택된 좌표]", selectedCoordinates.value);
 };
 
+// 📌 `DroneList.vue`에서 선택된 드론을 받는 함수
+const handleDroneSelect = (droneId) => {
+  selectedDroneId.value = droneId;
+  console.log("[📌 선택된 드론 ID]", selectedDroneId.value);
+};
 </script>
 
 <template>
@@ -28,14 +34,14 @@ const handleCoordinatesUpdate = (coords) => {
       <div class="dashboard-dronelist">
         <span>Drone List</span>
         <div class="drone-list-contents">
-          <MissionRegister :initial-coordinates="selectedCoordinates" />
-          <DroneList />
+          <MissionRegister :initial-coordinates="selectedCoordinates" :selectedDroneId="selectedDroneId"/>
+          <DroneList @handleDroneSelect="handleDroneSelect" />
         </div>
       </div>
 
       <div class="dashboard-status">
         <span>Status</span>
-        <DroneStatusInfo />
+        <DroneStatusInfo :selectedDroneId="selectedDroneId" />
       </div>
     </div>
   </main>

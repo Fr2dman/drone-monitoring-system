@@ -1,21 +1,37 @@
 <script setup>
 import { ref, watch, defineProps } from "vue";
-// import mapboxgl from "mapbox-gl";
-
-// mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 const props = defineProps({
-  initialCoordinates: Object, // DashBoard.vue에서 받은 초기 좌표
+  initialCoordinates: Object,
+  selectedDroneId: String, // 📌 부모로부터 선택된 드론 ID를 받음
 });
 
-
-// const mapContainer = ref(null);
-// const map = ref(null);
-const droneModel = ref("");
+const droneId = ref(""); // 드론 ID
+const selectedDroneModel = ref(""); // 드론 모델
 const targetLat = ref("");
 const targetLng = ref("");
 const mission = ref("");
+const customMission = ref("");
 
+// 📌 선택된 드론의 ID가 변경될 때, 모델 정보를 자동으로 가져옴
+watch(
+  () => props.selectedDroneId,
+  async (newId) => {
+    if (newId) {
+      droneId.value = newId; // 드론 ID 자동 입력
+      try {
+        const response = await fetch(`http://localhost:8000/api/drone/info/${newId}`);
+        const data = await response.json();
+        selectedDroneModel.value = data.model || "알 수 없음"; // 모델 정보 업데이트
+      } catch (error) {
+        console.error("드론 모델 정보 가져오기 실패:", error);
+      }
+    }
+  },
+  { immediate: true }
+);
+
+// 📌 지도에서 좌표 선택 시 자동 입력
 watch(
   () => props.initialCoordinates,
   (newCoords) => {
@@ -27,17 +43,18 @@ watch(
   { deep: true }
 );
 
+// 📌 드론에 임무 배정 요청
 const registerDrone = async () => {
   try {
-    const response = await fetch("http://localhost:8000/api/drone/register", {
+    const response = await fetch(`http://localhost:8000/api/drone/assign-mission/${droneId.value}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        droneModel: droneModel.value,
-        mission: mission.value || null,  // 미션이 없으면 null
-        target: targetLat.value && targetLng.value 
-          ? { lat: parseFloat(targetLat.value), lng: parseFloat(targetLng.value) } 
-          : null, // 좌표가 없으면 null
+        droneId: droneId.value,
+        mission: mission.value || customMission.value || null,
+        target: targetLat.value && targetLng.value
+          ? { lat: parseFloat(targetLat.value), lng: parseFloat(targetLng.value) }
+          : null,
       }),
     });
 
@@ -48,13 +65,19 @@ const registerDrone = async () => {
   }
 };
 </script>
+
 <template>
   <div class="drone-register">
     <h3>임무 배정</h3>
     <form @submit.prevent="registerDrone" class="form-grid">
       <div class="form-group">
-        <label for="droneId">드론 모델:</label>
-        <input id="droneId" v-model="droneId" type="text" required />
+        <label for="droneId">드론 ID:</label>
+        <input id="droneId" v-model="droneId" type="text" readonly />
+      </div>
+
+      <div class="form-group">
+        <label for="droneModel">드론 모델:</label>
+        <input id="droneModel" v-model="selectedDroneModel" type="text" readonly />
       </div>
 
       <div class="form-group">
@@ -81,7 +104,6 @@ const registerDrone = async () => {
         <label>미션:</label>
         <select v-model="mission" required>
           <option value="">Choose the operation goal</option>
-          <!-- Default placeholder -->
           <option value="suicide">폭격용</option>
           <option value="reconnaissance">정찰용</option>
           <option value="etc">기타</option>
@@ -96,6 +118,7 @@ const registerDrone = async () => {
     </form>
   </div>
 </template>
+
 
 <style scoped>
 .drone-register {

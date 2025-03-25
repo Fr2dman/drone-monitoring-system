@@ -119,6 +119,8 @@ onMounted(() => {
       markerElement.style.fontSize = "24px";
       markerElement.style.textAlign = "center";
       markerElement.style.transform = "translate(-50%, -50%)";
+      markerElement.style.padding = "0px"
+      markerElement.style.margin = "0px"
 
       // 새로운 마커 추가
       marker.value = new mapboxgl.Marker({ element: markerElement, draggable: false })

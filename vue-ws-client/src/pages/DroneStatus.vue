@@ -20,7 +20,7 @@ const message = "This is Drone Status";
 
       <div class="dashboard-status">
         <span>Status</span>
-        <DroneStatusInfo />
+        <DroneStatusInfo :selectedDroneId="selectedDroneId"/>
       </div>
     </div>
   </main>
